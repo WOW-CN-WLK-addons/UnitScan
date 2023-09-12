@@ -13,8 +13,19 @@ unitscan:SetScript('OnEvent', function(_, event, arg1)
 	end
 end)
 unitscan:RegisterEvent'ADDON_LOADED'
-unitscan:RegisterEvent'ADDON_ACTION_FORBIDDEN'
 unitscan:RegisterEvent'PLAYER_TARGET_CHANGED'
+unitscan:RegisterEvent'ADDON_ACTION_FORBIDDEN'
+
+local event_frames = {[UIParent] = true}
+do
+	local f
+	CreateFrame'Frame':SetScript('OnUpdate', function()
+		f = EnumerateFrames(f)
+		if f and f ~= unitscan then
+			event_frames[f] = f:IsEventRegistered'ADDON_ACTION_FORBIDDEN' or nil
+		end
+	end)
+end
 
 local BROWN = {.7, .15, .05}
 local YELLOW = {1, 1, .15}
@@ -266,14 +277,14 @@ do
 		if GetTime() - unitscan.last_check >= CHECK_INTERVAL then
 			unitscan.last_check = GetTime()
 			local event_registered = UIParent:IsEventRegistered'ADDON_ACTION_FORBIDDEN'
-			if event_registered then
-				UIParent:UnregisterEvent'ADDON_ACTION_FORBIDDEN'
+			for f in pairs(event_frames) do
+				f:UnregisterEvent'ADDON_ACTION_FORBIDDEN'
 			end
 			for name in pairs(unitscan_targets) do
 				unitscan.target(name)
 			end
-			if event_registered then
-				UIParent:RegisterEvent'ADDON_ACTION_FORBIDDEN'
+			for f in pairs(event_frames) do
+				f:RegisterEvent'ADDON_ACTION_FORBIDDEN'
 			end
 		end
 	end

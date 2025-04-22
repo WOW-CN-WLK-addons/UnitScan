@@ -7,7 +7,7 @@ unitscan:SetScript('OnEvent', function(_, event, arg1)
 	elseif event == 'ADDON_ACTION_FORBIDDEN' and arg1 == 'unitscan' then
 		forbidden = true
 	elseif event == 'PLAYER_TARGET_CHANGED' then
-		if UnitName'target' and strupper(UnitName'target') == unitscan.button:GetText() and not GetRaidTargetIndex'target' and (not IsInRaid() or UnitIsGroupAssistant'player' or UnitIsGroupLeader'player') then
+		if (UnitName'target' and strupper(UnitName'target') == unitscan.button:GetText()) and (not GetRaidTargetIndex'target') and (not IsInRaid() or UnitIsGroupAssistant'player' or UnitIsGroupLeader'player') then
 			SetRaidTarget('target', 4)
 		end
 	end
@@ -166,7 +166,7 @@ function unitscan.LOAD()
 		local subtitle = button:CreateFontString(nil, 'OVERLAY', 'GameFontBlackTiny')
 		subtitle:SetPoint('TOPLEFT', title, 'BOTTOMLEFT', 0, -4)
 		subtitle:SetPoint('RIGHT', title)
-		subtitle:SetText'Unit Found!'
+		subtitle:SetText'找到了!'
 	end
 	
 	do

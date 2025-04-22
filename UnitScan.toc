@@ -1,7 +1,7 @@
 ## Interface: 40400
 ## Author: shirsig
-## Title: unitscan
+## Title: UnitScan
 ## Version: @project-version@
 ## Notes: Unit scanner with flashy alert
-## SavedVariables: unitscan_targets
-unitscan.lua
+## SavedVariables: UnitScan_targets
+UnitScan.lua

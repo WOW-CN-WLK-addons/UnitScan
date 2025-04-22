@@ -1,4 +1,4 @@
-# UnitScan - WoW 1.12 addOn 
+# UnitScan
 
 ![Alt text](http://i.imgur.com/d7TLkZm.png)
 
